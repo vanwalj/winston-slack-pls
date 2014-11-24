@@ -1,0 +1,21 @@
+{
+  "name": "winston-slack-pls",
+  "version": "0.1.0",
+  "description": "Winston talk slack",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vanwalj/winston-slack-pls"
+  },
+  "author": "Jordan Van Walleghem",
+  "bugs": {
+    "url": "https://github.com/vanwalj/winston-slack-pls/issues"
+  },
+  "homepage": "https://github.com/vanwalj/winston-slack-pls",
+  "dependencies": {
+    "request": "^2.48.0",
+    "util": "^0.10.3",
+    "winston": "^0.8.3"
+  }
+}
