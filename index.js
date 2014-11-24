@@ -8,12 +8,13 @@ var util = require('util'),
 
 var Slack = exports.Slack  = function (params) {
     params = params || {};
-    if(!params.apiToken || !params.channel){
+    if(!params.apiToken || !params.channel || !params.metaChannel){
         throw new Error("options cannot be null");
     }
     else{
         this.channel    = params.channel;
         this.apiToken   = params.apiToken;
+        this.metaChannel = params.metaChannel;
         this.username   = params.username || "Winston";
         this.level      = params.level    || "silly";
         this.silent     = params.silent   || false;
@@ -47,6 +48,17 @@ Slack.prototype.log = function (level, msg, meta, callback) {
         "&username=" + encodeURIComponent("[" + level + "] " + this.username) +
         "&icon_emoji=" + encodeURIComponent(this.iconEmoji[level] || this.iconEmojiDefault);
     request.get(message);
+
+    if (Object.keys(meta).length) {
+        var fileMessage = "https://slack.com/api/files.upload" +
+            "?token=" + encodeURIComponent(this.apiToken) +
+            "&content=" + encodeURIComponent(JSON.stringify(meta, null, 4)) +
+            "&filetype=json" +
+            "&filename=" + encodeURIComponent(level) +
+            "&channels=" + encodeURIComponent(this.metaChannel) +
+            "&pretty=1";
+        request.get(fileMessage);
+    }
 
     callback(null, true);
 };
