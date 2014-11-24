@@ -8,18 +8,17 @@ var util = require('util'),
 
 var Slack = exports.Slack  = function (params) {
     params = params || {};
-    if(!params.apiToken || !params.channel || !params.metaChannel){
+    if(!params.apiToken || !params.channel){
         throw new Error("options cannot be null");
     }
     else{
-        this.channel    = params.channel;
-        this.apiToken   = params.apiToken;
-        this.metaChannel = params.metaChannel;
-        this.username   = params.username || "Winston";
-        this.level      = params.level    || "silly";
-        this.silent     = params.silent   || false;
-        this.raw        = params.raw      || false;
-        this.customFormatter = params.customFormatter;
+        this.channel = params.channel;
+        this.apiToken = params.apiToken;
+        this.metaChannel = params.metaChannel || this.channel;
+        this.username = params.username || "Winston";
+        this.level = params.level || "silly";
+        this.silent = params.silent || false;
+        this.raw = params.raw || false;
         this.iconEmoji = {
             error: ":finnadie:",
             warn: ":feelsgood:",
@@ -40,8 +39,8 @@ winston.transports.Slack = Slack;
 
 Slack.prototype.log = function (level, msg, meta, callback) {
 
-    var message = this.customFormatter ? this.customFormatter(level, msg, meta) :
-    "https://slack.com/api/chat.postMessage" +
+    var message =
+        "https://slack.com/api/chat.postMessage" +
         "?token=" + encodeURIComponent(this.apiToken) +
         "&channel=" + encodeURIComponent(this.channel) +
         "&text=" + encodeURIComponent(msg) +
@@ -50,7 +49,8 @@ Slack.prototype.log = function (level, msg, meta, callback) {
     request.get(message);
 
     if (Object.keys(meta).length) {
-        var fileMessage = "https://slack.com/api/files.upload" +
+        var fileMessage =
+            "https://slack.com/api/files.upload" +
             "?token=" + encodeURIComponent(this.apiToken) +
             "&content=" + encodeURIComponent(JSON.stringify(meta, null, 4)) +
             "&filetype=json" +
