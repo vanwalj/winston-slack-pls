@@ -54,7 +54,8 @@ Slack.prototype.log = function (level, msg, meta, callback) {
             "?token=" + encodeURIComponent(this.apiToken) +
             "&content=" + encodeURIComponent(JSON.stringify(meta, null, 4)) +
             "&filetype=json" +
-            "&filename=" + encodeURIComponent(level) +
+            "&filename=" + encodeURIComponent(level) + '.json' +
+            "&initial_comment=" + encodeURIComponent(msg) +
             "&channels=" + encodeURIComponent(this.metaChannel) +
             "&pretty=1";
         request.get(fileMessage);
