@@ -15,17 +15,19 @@ var Slack = exports.Slack  = function (params) {
         this.channel    = params.channel;
         this.apiToken   = params.apiToken;
         this.username   = params.username || "Winston";
-        this.level      = params.level    || 'silly';
+        this.level      = params.level    || 'debug';
         this.silent     = params.silent   || false;
         this.raw        = params.raw      || false;
         this.customFormatter = params.customFormatter;
         this.iconEmoji = {
-            silly: ":rage1:",
-            debug: ":rage2:",
-            verbose: ":rage3:",
-            info: ":goberserk:",
-            warn: ":feelsgood:",
-            error: ":finnadie:"
+            emerg: ":finnadie:",
+            alert: ":feelsgood:",
+            crit: ":goberserk:",
+            error: ":rage4:",
+            warning: ":rage3:",
+            notice: ":rage2:",
+            info: ":rage1:",
+            debug: ":suspect:"
         } || params.iconEmoji;
         this.iconEmojiDefault = params.iconEmojiDefault || ":troll:";
         this.handleExceptions = params.handleExceptions || false;
