@@ -19,6 +19,7 @@ var Slack = exports.Slack  = function (params) {
         this.level = params.level || "silly";
         this.silent = params.silent || false;
         this.raw = params.raw || false;
+        this.handleExceptions = params.handleExceptions || true;
         this.iconEmoji = {
             error: ":finnadie:",
             warn: ":feelsgood:",
