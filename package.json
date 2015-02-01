@@ -14,7 +14,7 @@
   },
   "homepage": "https://github.com/vanwalj/winston-slack-pls",
   "dependencies": {
-    "request": "^2.48.0",
+    "request": "^2.51.0",
     "winston": "^0.8.3"
   }
 }
