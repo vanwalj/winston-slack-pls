@@ -30,6 +30,7 @@ var Slack = exports.Slack  = function (params) {
         } || params.iconEmoji;
         this.iconEmojiDefault = params.iconEmojiDefault || ":troll:";
         this.handleExceptions = params.handleExceptions || false;
+        this.name = params.name;
 
     }
 };

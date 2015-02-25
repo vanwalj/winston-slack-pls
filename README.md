@@ -3,7 +3,10 @@ winston-slack-pls
 
 Usage:
 
-winston.add(Slack, {
+var WinstonSlack = require('winston-slack-pls').Slack
+
+winston.add(WinstonSlack, {
         apiToken: "slackApiToken",
-        channel: "channelId"
+        channel: "channelId",
+        name: "slack"
     });
