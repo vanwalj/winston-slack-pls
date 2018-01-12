@@ -13,6 +13,8 @@ var Slack = exports.Slack  = function (params) {
     }
     else{
         this.channel = params.channel;
+        this.stripColors = params.stripColors;
+        this.stripMeta = params.stripMeta;
         this.apiToken = params.apiToken;
         this.metaChannel = params.metaChannel || this.channel;
         this.username = params.username || "Winston";
@@ -39,18 +41,21 @@ util.inherits(Slack, winston.Transport);
 
 winston.transports.Slack = Slack;
 
+const colorsMatcher = /\u001b\[(\d+(;\d+)*)?m/g;
+
 Slack.prototype.log = function (level, msg, meta, callback) {
+    const textMessage = this.stripColors ? msg.replace(colorsMatcher, '') : msg;
 
     var message =
         "https://slack.com/api/chat.postMessage" +
         "?token=" + encodeURIComponent(this.apiToken) +
         "&channel=" + encodeURIComponent(this.channel) +
-        "&text=" + encodeURIComponent(msg) +
+        "&text=" + encodeURIComponent(textMessage) +
         "&username=" + encodeURIComponent("[" + level + "] " + this.username) +
         "&icon_emoji=" + encodeURIComponent(this.iconEmoji[level] || this.iconEmojiDefault);
     request.get(message);
 
-    if (Object.keys(meta).length) {
+    if (!this.stripMeta && Object.keys(meta).length) {
         var fileMessage =
             "https://slack.com/api/files.upload" +
             "?token=" + encodeURIComponent(this.apiToken) +
